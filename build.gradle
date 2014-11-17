@@ -1,0 +1,38 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+uploadArchives {
+	repositories.mavenDeployer {
+		repository (url: "file:///home/hariram/Personal/github/maven-repo-snapshot")
+		pom.version = '0.1'
+		pom.artifactId = 'dbannotation'
+		pom.groupId = 'com.hariram.annotation'
+	}
+}
+
+sourceCompatibility = '1.8'
+
+jar {
+    baseName = 'dbannotation'
+    version =  '0.1'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {url "file:///home/hariram/Personal/github/maven-repo-snapshot"}
+    
+}
+
+dependencies {
+    compile("log4j:log4j:1.2.17")
+    compile("junit:junit:4.4")
+    compile("mysql:mysql-connector-java:5.1.30")
+    compile("com.googlecode.json-simple:json-simple:1.1")
+    compile("com.hariram.annotation:annotation:0.1")       
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.12'
+}

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.hariram.annotation.db;
 
 import java.lang.reflect.InvocationTargetException;
@@ -10,30 +7,31 @@ import com.hariram.annotation.AnnotationProcessor;
 
 
 /**
+ * Annotation process for @DB (that performs DB functionalities)
+ * 
  * @author hariram
- * @date 14-Nov-2014
+ * date 14-Nov-2014
  */
 public class DBAnnotationProcessor implements AnnotationProcessor {
 	/**
-	 * 
+	 * Default constructor
 	 */
 	public DBAnnotationProcessor() {
 	}
 	
 	/**
+	 * Process - call the db method with arguments provided, of the object passed that has the @DB
 	 * 
-	 * @param obj
+	 * @param obj object which has @DB and the db method to be called using reflection
+	 * @param dbMethodName the db method to be called
+	 * @param dbMethodArgs arguments for the db method to be called
+	 * @return Object that is returned by the db method
 	 */
 	public Object process(Object obj, String dbMethodName, Object[] dbMethodArgs) {
 		Object returnObj = null;
 		Class objClass = obj.getClass();
 		if(objClass.isAnnotationPresent(DB.class)) {
 			DB dbObj = (DB) objClass.getAnnotation(DB.class);
-			//DAO dao = DAO.getInstance();
-			//dao.setProperties(dbObj.driverName(), dbObj.connUrl(), dbObj.userName(), dbObj.password());
-			//dao.setup();
-			//dao.connect();
-			//dao.disconnect();
 			try {
 				Method method = objClass.getMethod("process",String.class, String.class, String.class, String.class, String.class, Object[].class);
 				returnObj = method.invoke(obj, dbObj.driverName(), dbObj.connUrl(), dbObj.userName(), dbObj.password(), dbMethodName, dbMethodArgs);

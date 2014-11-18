@@ -15,29 +15,34 @@ import com.hariram.annotation.db.DAO;
 import com.hariram.annotation.db.DB;
 
 /**
+ * Sample DAO class that has DB annotation
+ * 
  * @author hariram
- *
+ * date 14-Nov-2014
  */
 @DB(connUrl="jdbc:mysql://10.30.60.225/AD21.0", userName="is2iotm", password="amma123", driverName="com.mysql.jdbc.Driver")
 public class MyDAO extends DAO {
 	private static MyDAO MYDAO = new MyDAO();
+	/**
+	 * Private constructor as following singleton pattern
+	 */
 	private MyDAO() {
 	}
 	
+	/**
+	 * Returns the singleton instance of the class
+	 * 
+	 * @return instance of the class
+	 */
 	public static MyDAO getInstance() {
 		return MYDAO;
 	}
 
-	/*@Override
-	public Object process(String driverName, String connUrl, String userName,
-			String password, String dbMethodName, Object[] dbMethodArgs) {
-		Object returnObj = null;
-		processBefore(driverName, connUrl, userName, password);
-		returnObj = AnnotationUtil.callMethod(this, dbMethodName, dbMethodArgs);
-		processAfter();
-		return returnObj;
-	}*/
-	
+	/**
+	 * Return the list of table names in the particular db
+	 * 
+	 * @return Object list of table names
+	 */
 	public Object getData() {
 		Map<String, List<String>> map = new HashMap<String, List<String>>();
 

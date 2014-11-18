@@ -6,7 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-
+/**
+ * Annotation for DB connection
+ * 
+ * @author hariram
+ * date 14-Nov-2014
+ */
 @Target({ElementType.TYPE})
 public @interface DB {
 	String connUrl();

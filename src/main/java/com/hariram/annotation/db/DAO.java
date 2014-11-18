@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.hariram.annotation.db;
 
 import java.sql.Connection;
@@ -10,8 +7,10 @@ import java.sql.SQLException;
 import com.hariram.annotation.util.AnnotationUtil;
 
 /**
+ * Base DAO class with singleton pattern and common functionalities
+ * 
  * @author hariram
- * @date 14-Nov-2014
+ * date 14-Nov-2014
  */
 public class DAO {
 	private String driverName = null;
@@ -30,19 +29,21 @@ public class DAO {
 	}
 	
 	/**
+	 * Returns the single instance of this class
 	 * 
-	 * @return
+	 * @return DAO instance of the class
 	 */
 	public static DAO getInstance() {
 		return DAO;
 	}
 	
 	/**
+	 * Sets properties for DB connection
 	 * 
-	 * @param driverName
-	 * @param connUrl
-	 * @param userName
-	 * @param password
+	 * @param driverName full name of sql driver class
+	 * @param connUrl connection string
+	 * @param userName username of connection
+	 * @param password password of connection
 	 */
 	protected void setProperties(String driverName, String connUrl, String userName, String password) {
 		this.driverName = driverName;
@@ -52,7 +53,7 @@ public class DAO {
 	}
 	
 	/**
-	 * 
+	 * Setup the sql driver in java (using Class.forName)
 	 */
 	protected void setup() {
 		if(driverName == null || connUrl == null || userName == null || password == null) {
@@ -66,8 +67,9 @@ public class DAO {
 	}
 	
 	/**
+	 * Connect to the db using properties set
 	 * 
-	 * @return
+	 * @return connection to the database
 	 */
 	protected Connection connect() {
 		try {
@@ -80,7 +82,7 @@ public class DAO {
 	}
 	
 	/**
-	 * 
+	 * Disconnect the connection to the db
 	 */
 	protected void disconnect() {
 		try {
@@ -93,16 +95,11 @@ public class DAO {
 		}
 	}
 	/**
-	 * @return 
+	 * Processes the sql provided to the particular db using reflection
 	 * 
+	 * @return Object that is returned from the sql
 	 */
 	public Object process(String driverName, String connUrl, String userName, String password, String dbMethodName, Object[] dbMethodArgs) {
-		/*setProperties(driverName, connUrl, userName, password);
-		setup();
-		connect();*/
-		/*processBefore(driverName, connUrl, userName, password);
-		processAfter();
-		return null;*/
 		Object returnObj = null;
 		processBefore(driverName, connUrl, userName, password);
 		returnObj = AnnotationUtil.callMethod(this, dbMethodName, dbMethodArgs);
@@ -111,7 +108,7 @@ public class DAO {
 	}
 	
 	/**
-	 * 
+	 * Sets the properties, sql driver setup and connects to the db before processing of sql
 	 */
 	public void processBefore(String driverName, String connUrl, String userName, String password) {
 		setProperties(driverName, connUrl, userName, password);
@@ -120,7 +117,7 @@ public class DAO {
 	}
 	
 	/**
-	 * 
+	 * Disconnects from the db after processing of sql is done
 	 */
 	public void processAfter() {
 		disconnect();

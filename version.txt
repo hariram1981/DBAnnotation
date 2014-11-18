@@ -1,0 +1,4 @@
+0.1 - Initial version
+    - added DB annotation for DB connections
+    - added DBAnnotationProcessor for processing @DB
+    - added sample DAO class

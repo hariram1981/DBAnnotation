@@ -7,7 +7,7 @@ uploadArchives {
 		repository (url: "file:///home/hariram/Personal/github/maven-repo-snapshot")
 		pom.version = '0.1'
 		pom.artifactId = 'dbannotation'
-		pom.groupId = 'com.hariram.annotation'
+		pom.groupId = 'com.hariram'
 	}
 }
 
@@ -21,8 +21,9 @@ jar {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven {url "file:///home/hariram/Personal/github/maven-repo-snapshot"}
-    
+    maven {
+    	url "https://rawgit.com/hariram1981/maven-repo-snapshot/master"
+    }
 }
 
 dependencies {
@@ -30,7 +31,9 @@ dependencies {
     compile("junit:junit:4.4")
     compile("mysql:mysql-connector-java:5.1.30")
     compile("com.googlecode.json-simple:json-simple:1.1")
-    compile("com.hariram.annotation:annotation:0.1")       
+    compile("com.hariram:annotation:0.1")       
+    compile("com.hariram:commonutil:0.2")
+    compile("com.hariram:dynamicfactory:0.1")
 }
 
 task wrapper(type: Wrapper) {

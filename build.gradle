@@ -4,7 +4,7 @@ apply plugin: 'maven'
 
 uploadArchives {
 	repositories.mavenDeployer {
-		repository (url: "file:///home/hariram/Personal/github/maven-repo-snapshot")
+		repository (url: "file:///home/hariram/Personal/github/maven-repo-release")
 		pom.version = '0.1'
 		pom.artifactId = 'dbannotation'
 		pom.groupId = 'com.hariram'
@@ -38,4 +38,9 @@ dependencies {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.12'
+}
+
+task generateJavadoc(type: Javadoc) {
+  source = sourceSets.main.allJava
+  destinationDir = reporting.file("dbannotation")
 }

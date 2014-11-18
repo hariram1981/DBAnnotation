@@ -97,6 +97,12 @@ public class DAO {
 	/**
 	 * Processes the sql provided to the particular db using reflection
 	 * 
+	 * @param driverName full name of sql driver class
+	 * @param connUrl connection string
+	 * @param userName username of connection
+	 * @param password password of connection
+	 * @param dbMethodName the db method to be called
+	 * @param dbMethodArgs arguments for the db method to be called
 	 * @return Object that is returned from the sql
 	 */
 	public Object process(String driverName, String connUrl, String userName, String password, String dbMethodName, Object[] dbMethodArgs) {
@@ -109,6 +115,10 @@ public class DAO {
 	
 	/**
 	 * Sets the properties, sql driver setup and connects to the db before processing of sql
+	 * @param driverName full name of sql driver class
+	 * @param connUrl connection string
+	 * @param userName username of connection
+	 * @param password password of connection
 	 */
 	public void processBefore(String driverName, String connUrl, String userName, String password) {
 		setProperties(driverName, connUrl, userName, password);

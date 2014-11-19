@@ -22,7 +22,10 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven {
-    	url "https://rawgit.com/hariram1981/maven-repo-snapshot/master"
+    	url "https://raw.githubusercontent.com/hariram1981/maven-repo-release/master/"
+    }
+    maven {
+    	url "https://raw.githubusercontent.com/hariram1981/maven-repo-snapshot/master/"
     }
 }
 

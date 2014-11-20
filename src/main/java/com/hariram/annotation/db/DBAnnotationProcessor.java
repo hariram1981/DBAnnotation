@@ -3,6 +3,8 @@ package com.hariram.annotation.db;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.log4j.Logger;
+
 import com.hariram.annotation.AnnotationProcessor;
 
 
@@ -13,6 +15,8 @@ import com.hariram.annotation.AnnotationProcessor;
  * date 14-Nov-2014
  */
 public class DBAnnotationProcessor implements AnnotationProcessor {
+	private static final Logger LOGGER = Logger.getLogger(DBAnnotationProcessor.class);
+
 	/**
 	 * Default constructor
 	 */
@@ -28,18 +32,20 @@ public class DBAnnotationProcessor implements AnnotationProcessor {
 	 * @return Object that is returned by the db method
 	 */
 	public Object process(Object obj, String dbMethodName, Object[] dbMethodArgs) {
+		LOGGER.info("DBAnnotationProcessor.process, obj: " + obj + ", dbMethodName: " + dbMethodName + ", dbMethodArgs: " + dbMethodArgs);
 		Object returnObj = null;
-		Class objClass = obj.getClass();
+		Class<? extends Object> objClass = obj.getClass();
 		if(objClass.isAnnotationPresent(DB.class)) {
 			DB dbObj = (DB) objClass.getAnnotation(DB.class);
 			try {
 				Method method = objClass.getMethod("process",String.class, String.class, String.class, String.class, String.class, Object[].class);
 				returnObj = method.invoke(obj, dbObj.driverName(), dbObj.connUrl(), dbObj.userName(), dbObj.password(), dbMethodName, dbMethodArgs);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.error("DBAnnotationProcessor.process, message : " + e.getClass() + " " + e.getMessage());
 			}
 		}
+		LOGGER.info("DBAnnotationProcessor.process, returnObj: " + returnObj);
+		
 		return returnObj;
 	}
 	

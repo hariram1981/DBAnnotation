@@ -2,3 +2,4 @@
     - added DB annotation for DB connections
     - added DBAnnotationProcessor for processing @DB
     - added sample DAO class
+0.2 - Added logging and correct issue with Class (using Class<? extends Object)

@@ -4,8 +4,8 @@ apply plugin: 'maven'
 
 uploadArchives {
 	repositories.mavenDeployer {
-		repository (url: "file:///home/hariram/Personal/github/maven-repo-release")
-		pom.version = '0.2'
+		repository (url: "file:///home/hariram/Personal/github/maven-repo-snapshot")
+		pom.version = '0.3'
 		pom.artifactId = 'dbannotation'
 		pom.groupId = 'com.hariram'
 	}
@@ -15,7 +15,7 @@ sourceCompatibility = '1.8'
 
 jar {
     baseName = 'dbannotation'
-    version =  '0.2'
+    version =  '0.3'
 }
 
 repositories {
@@ -34,7 +34,7 @@ dependencies {
     compile("junit:junit:4.4")
     compile("mysql:mysql-connector-java:5.1.30")
     compile("com.googlecode.json-simple:json-simple:1.1")
-    compile("com.hariram:annotation:0.1")       
+    compile("com.hariram:annotation:0.3")       
     compile("com.hariram:commonutil:0.2")
     compile("com.hariram:dynamicfactory:0.1")
 }

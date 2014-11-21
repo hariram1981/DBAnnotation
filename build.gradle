@@ -35,8 +35,8 @@ dependencies {
     compile("mysql:mysql-connector-java:5.1.30")
     compile("com.googlecode.json-simple:json-simple:1.1")
     compile("com.hariram:annotation:0.3")       
-    compile("com.hariram:commonutil:0.2")
-    compile("com.hariram:dynamicfactory:0.1")
+    compile("com.hariram:commonutil:0.3")
+    compile("com.hariram:dynamicfactory:0.2")
 }
 
 task wrapper(type: Wrapper) {

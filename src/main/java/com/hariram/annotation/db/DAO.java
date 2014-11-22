@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.hariram.annotation.AnnotationProcessor;
 import com.hariram.annotation.util.AnnotationUtil;
 
 /**
@@ -131,5 +132,19 @@ public class DAO {
 	 */
 	public void processAfter() {
 		disconnect();
+	}
+	
+	/**
+	 * Method called by all sub classes in order to process annotation and
+	 *  invoke callback method
+	 * 
+	 * @param methodName db method name of the object, that is to be invoked
+	 * @param methodArgs arguments for the db method name
+	 * @return Object return of the db method invocation
+	 */
+	public Object processAndCallback(String methodName, Object[] methodArgs) {
+		AnnotationProcessor processor = new DBAnnotationProcessor();
+		Object returnObj = processor.process(this, methodName, methodArgs);
+		return returnObj;
 	}
 }

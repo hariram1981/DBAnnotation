@@ -23,4 +23,14 @@ public class DBAnnotationProcessorTest {
 		assertTrue(obj != null);
 	}
 
+	@Test
+	public void testCallDAOGenericFunction() {
+/*		AnnotationProcessor processor = new DBAnnotationProcessor();
+		Object obj = processor.process(MyDAO.getInstance(), "getData", null);
+*/
+		Object obj = MyDAO.getInstance().processAndCallback("getData", null);
+		System.out.println(obj);
+		assertTrue(obj != null);
+	}
+
 }

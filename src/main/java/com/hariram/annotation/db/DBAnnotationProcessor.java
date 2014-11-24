@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 
+import com.hariram.annotation.AnnotationException;
 import com.hariram.annotation.AnnotationProcessor;
 
 
@@ -31,7 +32,7 @@ public class DBAnnotationProcessor implements AnnotationProcessor {
 	 * @param dbMethodArgs arguments for the db method to be called
 	 * @return Object that is returned by the db method
 	 */
-	public Object process(Object obj, String dbMethodName, Object[] dbMethodArgs) {
+	public Object process(Object obj, String dbMethodName, Object[] dbMethodArgs) throws AnnotationException {
 		LOGGER.info("DBAnnotationProcessor.process, obj: " + obj + ", dbMethodName: " + dbMethodName + ", dbMethodArgs: " + dbMethodArgs);
 		Object returnObj = null;
 		Class<? extends Object> objClass = obj.getClass();
@@ -42,11 +43,20 @@ public class DBAnnotationProcessor implements AnnotationProcessor {
 				returnObj = method.invoke(obj, dbObj.driverName(), dbObj.connUrl(), dbObj.userName(), dbObj.password(), dbMethodName, dbMethodArgs);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				LOGGER.error("DBAnnotationProcessor.process, message : " + e.getClass() + " " + e.getMessage());
+				throw new AnnotationException("DBAnnotationProcessor.process, message : " + e.getClass() + " " + e.getMessage(), AnnotationType.DBAnnotation);
 			}
 		}
 		LOGGER.info("DBAnnotationProcessor.process, returnObj: " + returnObj);
 		
 		return returnObj;
+	}
+
+	/**
+	 * Deprecated method - used in annotation processor and not in db annotation
+	 */
+	@Deprecated
+	public Object process(Object arg0) throws AnnotationException {
+		return null;
 	}
 	
 }

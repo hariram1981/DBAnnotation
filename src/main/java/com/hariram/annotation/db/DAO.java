@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.hariram.annotation.AnnotationException;
 import com.hariram.annotation.AnnotationProcessor;
 import com.hariram.annotation.util.AnnotationUtil;
 
@@ -142,7 +143,7 @@ public class DAO {
 	 * @param methodArgs arguments for the db method name
 	 * @return Object return of the db method invocation
 	 */
-	public Object processAndCallback(String methodName, Object[] methodArgs) {
+	public Object processAndCallback(String methodName, Object[] methodArgs) throws AnnotationException {
 		AnnotationProcessor processor = new DBAnnotationProcessor();
 		Object returnObj = processor.process(this, methodName, methodArgs);
 		return returnObj;

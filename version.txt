@@ -5,3 +5,4 @@
 0.2 - Added logging and correct issue with Class (using Class<? extends Object)
 0.3 - Updated annotation jar to 0.3
 0.4 - Added method in DAO - processAndCallback - which calls annotation processes internally and invokes callback and returns value after invoking
+0.5 - Updated annotation jar to 0.5 and added exception handling

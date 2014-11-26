@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import com.hariram.annotation.AnnotationException;
 import com.hariram.annotation.AnnotationProcessor;
 import com.hariram.annotation.util.AnnotationUtil;
@@ -23,6 +25,8 @@ public class DAO {
 	protected static Connection connection = null;
 	
 	public static final DAO DAO = new DAO();
+
+	public static final Logger LOGGER = Logger.getLogger(DAO.class);
 	
 	/**
 	 * Private constructor - singleton pattern
@@ -48,24 +52,28 @@ public class DAO {
 	 * @param password password of connection
 	 */
 	protected void setProperties(String driverName, String connUrl, String userName, String password) {
+		LOGGER.info("DAO.setProperties, driverName : " + driverName + ", connUrl: " + connUrl  + ", userName: " + userName  + ", password: " + password);
 		this.driverName = driverName;
 		this.connUrl = connUrl;
 		this.userName = userName;
 		this.password = password;
+		LOGGER.info("DAO.setProperties, done");
 	}
 	
 	/**
 	 * Setup the sql driver in java (using Class.forName)
 	 */
 	protected void setup() {
+		LOGGER.info("DAO.setup, start");
 		if(driverName == null || connUrl == null || userName == null || password == null) {
 		}
 		
 		try {
 			Class.forName(driverName);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			LOGGER.error("DAO.setup, message : " + e.getClass() + " " + e.getMessage());
 		}
+		LOGGER.info("DAO.setup, done");
 	}
 	
 	/**
@@ -74,12 +82,13 @@ public class DAO {
 	 * @return connection to the database
 	 */
 	protected Connection connect() {
+		LOGGER.info("DAO.connect, start");
 		try {
 			connection = DriverManager.getConnection(connUrl, userName, password);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("DAO.setup, message : " + e.getClass() + " " + e.getMessage());
 		}
+		LOGGER.info("DAO.connect, connection: " + connection);
 		return connection;
 	}
 	
@@ -87,14 +96,15 @@ public class DAO {
 	 * Disconnect the connection to the db
 	 */
 	protected void disconnect() {
+		LOGGER.info("DAO.disconnect, start");
 		try {
 			if(connection != null && !connection.isClosed()) {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("DAO.setup, message : " + e.getClass() + " " + e.getMessage());
 		}
+		LOGGER.info("DAO.disconnect, done");
 	}
 	/**
 	 * Processes the sql provided to the particular db using reflection
@@ -108,10 +118,12 @@ public class DAO {
 	 * @return Object that is returned from the sql
 	 */
 	public Object process(String driverName, String connUrl, String userName, String password, String dbMethodName, Object[] dbMethodArgs) {
+		LOGGER.info("DAO.process, driverName: " + driverName + ", connUrl: " + connUrl + ", userName: " + userName + ", password: " + password + ", dbMethodName: " + dbMethodName + ", dbMethodArgs: " + dbMethodArgs);
 		Object returnObj = null;
 		processBefore(driverName, connUrl, userName, password);
 		returnObj = AnnotationUtil.callMethod(this, dbMethodName, dbMethodArgs);
 		processAfter();
+		LOGGER.info("DAO.process, returnObj: " + returnObj);
 		return returnObj;
 	}
 	
@@ -123,16 +135,20 @@ public class DAO {
 	 * @param password password of connection
 	 */
 	public void processBefore(String driverName, String connUrl, String userName, String password) {
+		LOGGER.info("DAO.processBefore, driverName: " + driverName + ", connUrl: " + connUrl + ", userName: " + userName + ", password: " + password);
 		setProperties(driverName, connUrl, userName, password);
 		setup();
 		connect();
+		LOGGER.info("DAO.processBefore, done");
 	}
 	
 	/**
 	 * Disconnects from the db after processing of sql is done
 	 */
 	public void processAfter() {
+		LOGGER.info("DAO.processAfter, start");
 		disconnect();
+		LOGGER.info("DAO.processAfter, done");
 	}
 	
 	/**
@@ -144,8 +160,10 @@ public class DAO {
 	 * @return Object return of the db method invocation
 	 */
 	public Object processAndCallback(String methodName, Object[] methodArgs) throws AnnotationException {
+		LOGGER.info("DAO.processAndCallback, methodName: " + methodName + ", methodArgs: " + methodArgs);
 		AnnotationProcessor processor = new DBAnnotationProcessor();
 		Object returnObj = processor.process(this, methodName, methodArgs);
+		LOGGER.info("DAO.processAfter, returnObj: " + returnObj);
 		return returnObj;
 	}
 }

@@ -20,7 +20,7 @@ import com.hariram.annotation.db.DB;
  * @author hariram
  * date 14-Nov-2014
  */
-@DB(connUrl="jdbc:mysql://10.30.60.225/AD21.0", userName="is2iotm", password="amma123", driverName="com.mysql.jdbc.Driver")
+@DB(connUrl="jdbc:mysql://192.168.1.1", userName="username", password="password", driverName="com.mysql.jdbc.Driver")
 public class MyDAO extends DAO {
 	private static MyDAO MYDAO = new MyDAO();
 	/**
